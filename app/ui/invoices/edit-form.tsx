@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
-import { updateInvoice } from '@/app/lib/actions';
+import { State, updateInvoice } from '@/app/lib/actions';
 import { useActionState } from 'react';
 
 
@@ -138,5 +138,5 @@ export default function EditInvoiceForm({
         <Button type="submit">Edit Invoice</Button>
       </div>
     </form>
-  );
+  ;
 }
