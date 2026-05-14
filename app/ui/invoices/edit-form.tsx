@@ -1,8 +1,5 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
-import { updateInvoice } from '@/app/lib/actions';
-
 import {
   CheckIcon,
   ClockIcon,
@@ -13,6 +10,11 @@ import {
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 
+import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { updateInvoice } from '@/app/lib/actions';
+import { useActionState } from 'react';
+
+
 export default function EditInvoiceForm({
   invoice,
   customers,
@@ -20,10 +22,11 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+  const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-
-  return (
-    <form action={updateInvoiceWithId}>
+  const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
+ 
+  return <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -66,7 +69,7 @@ export default function EditInvoiceForm({
                 name="amount"
                 type="number"
                 step="0.01"
-                defaultValue={invoice.amount}
+                defaultValue={invoice.amount / 100}
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
